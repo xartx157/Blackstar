@@ -1,0 +1,166 @@
+// Class ContaBanco
+package aulapoo05;
+
+import java.util.Scanner;
+
+public class ContaBanco {
+
+    public float numConta;
+    protected String tipo;
+    private String dono;
+    private float saldo;
+    private boolean status;
+    Scanner teclado = new Scanner(System.in);
+
+    public ContaBanco() {
+        this.status = false;
+        this.saldo = 0f;
+
+    }
+
+    public void abrirConta() {
+        setStatus(true);
+        System.out.println("Qual é o tipo de Conta[CC/CP]: ");
+        String T = teclado.next();
+        System.out.println("Qual é o seu nome: ");
+        String n = teclado.next();
+        setDono(n);
+        setTipo(T);
+        if ("CC".equals(T)) {
+            setSaldo(this.saldo + 50);
+        }
+        if ("CP".equals(T)) {
+            setSaldo(this.saldo + 150);
+        }else{
+        System.out.println("Deseja fazer algum doposito[S/N]: ");
+        String resp = teclado.next();
+        if ("S".equals(resp)) {
+            depositarConta();
+        }
+        anuidadeConta();
+
+    }
+    }
+
+    public void fecharConta() {
+        if (this.status == false) {
+            System.out.println("Voce não pode fachar a conta, pois sua conta já esta desativada.");
+        } else {
+            if (this.saldo >= 1) {
+                System.out.println("Voce não pode fachar a conta, pois sua conta esta contem saldo.");
+            } else {
+                if ((this.saldo < 0)) {
+                    System.out.println("Voce não pode fachar a conta, pois sua conta esta com saldo negativo.");
+                } else {
+                    setStatus(false);
+                    System.out.println("Conta Fechada.");
+                }
+            }
+        }
+    }
+
+    public void depositarConta() {
+        if (this.status == false) {
+            System.out.println("Voce não pode depositar, pois sua conta esta desativada.");
+        } else {
+            System.out.println("Quanto deseja depositar: ");
+            float dp = teclado.nextFloat();
+            setSaldo(dp);
+        }
+    }
+
+    public void statusConta() {
+        System.out.println("Titular: "+getDono());
+        System.out.println("Tipo de conta: "+getTipo());
+        System.out.println("Status: "+getStatus());
+        System.out.println("Saldo: "+getSaldo());
+    }
+
+    public void sacarConta() {
+        if (this.status == false) {
+            System.out.println("Voce não pode sacar, pois sua conta esta desativada.");
+        } else {
+            if (this.saldo <= 0) {
+                System.out.println("Você não tem saldo Disponível.");
+
+            } else {
+                System.out.println("Quanto deseja sacar: ");
+                float saq = teclado.nextFloat();
+                setSaldo(this.saldo - saq);
+            }
+        }
+    }
+
+    public void anuidadeConta() {
+        if (this.status == true) {
+            if ("CC".equals(this.tipo)) {
+                setSaldo(this.saldo - 12);
+            } else {
+                if ("CP".equals(this.tipo)) {
+                    setSaldo(this.saldo - 20);
+                } else {
+                    System.out.println("Conta Invalida.");
+                }
+            }
+        }
+    }
+
+    public float getNumConta() {
+
+        return this.numConta;
+    }
+
+    public void setnumConta(float Conta) {
+        this.numConta = Conta;
+
+    }
+
+    public String getTipo() {
+        return this.tipo;
+    }
+
+    public void setTipo(String Tipo) {
+        this.tipo = Tipo;
+
+    }
+
+    public String getDono() {
+        return this.dono;
+    }
+
+    public void setDono(String Dono) {
+        this.dono = Dono;
+
+    }
+
+    public float getSaldo() {
+        return this.saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+
+    public boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+}
+// Main Class
+package aulapoo05;
+
+
+public class AulaPoo05 {
+
+
+    public static void main(String[] args) {
+        ContaBanco c1 = new ContaBanco();
+        c1.abrirConta();
+        c1.statusConta();
+        
+    }
+    
+}
