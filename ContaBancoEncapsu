@@ -1,0 +1,177 @@
+// Class Main.
+package contabancoencapsulada;
+
+public class ContaBancoEncapsulada {
+
+    public static void main(String[] args) {
+     ContaBanco c1 = new ContaBanco();
+     c1.menuOpcao();
+    }
+    
+}
+// Interface
+package contabancoencapsulada;
+
+public interface Controlador {
+    public abstract void menuOpcao();
+    public abstract void abrirConta();
+    public abstract void fecharConta();
+    public abstract void depositarConta();
+    public abstract void sacarConta();
+    public abstract void anuidadeConta();
+    public abstract void statusConta();
+    
+}
+//Classe
+package contabancoencapsulada;
+
+import java.util.Scanner;
+
+public class ContaBanco implements Controlador {
+    private String dono;
+    private String tipo;
+    private float numConta;
+    private float saldoConta;
+    private boolean status;
+    Scanner teclado = new Scanner(System.in);
+    //metodo Construtor
+    public ContaBanco(){
+        this.status = false;
+        this.saldoConta = 0f;
+        menuOpcao();
+    }
+    //Metodos getters e setters
+    public String getDono(){
+        return this.dono;
+    }
+    public void setDono(String dono){
+        this.dono = dono;
+    }
+    public String getTipo(){
+        return this.tipo;
+    }
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
+    public float getNumConta(){
+        return this.numConta;
+    }
+    public void setNumConta(float nc){
+        this.numConta = nc;
+    }
+    public float getSaldo(){
+        return this.saldoConta;
+    }
+    public void setSaldo(float saldo){
+        this.saldoConta = saldo;
+    }
+    public boolean getStatus(){
+        return this.status;
+    }
+    public void setStatus(boolean status){
+        this.status = status;    
+    }
+    //metodos abstratos
+
+    @Override
+    public void abrirConta() {
+       if(getStatus()== false){
+           System.out.println("         CADASTRO CONTA      ");
+           System.out.println("---------------------------------------------------------");
+           System.out.print("Qual o tipo da conta[CC/CP]: ");
+           String t = teclado.next();
+           if(t.equals("CC")){
+               setSaldo(50f);
+           }
+           if(t.equals("CP")){
+               setSaldo(150f);
+           }
+           setTipo(t);
+           System.out.print("Qual é o seu nome: ");
+           String d = teclado.next();
+           setDono(d);
+           System.out.println("sr."+this.getDono()+" sua conta foi aberta com sucesso.");
+           System.out.println("-----------------------------------------------------------");
+           
+       } 
+    }
+
+    @Override
+    public void fecharConta() {
+        if((this.getStatus() == true) && (this.getSaldo() == 0f)){
+            System.out.println("sr."+this.getDono()+" sua conta foi fechada com sucesso.");
+            
+        }
+        
+    }
+
+    @Override
+    public void depositarConta() {
+        if(getStatus() == true){
+            System.out.print("Qual é o valor do deposito: ");
+            float d = teclado.nextFloat();
+            setSaldo(d);
+        }
+        
+    }
+
+    @Override
+    public void sacarConta() {
+        if((getStatus() == true) && (getSaldo() >= 1f)){
+            System.out.print("Qual é o valor de saque: ");
+            float saq = teclado.nextFloat();
+            setSaldo(this.getSaldo() - saq);
+        }
+    }
+
+    @Override
+    public void anuidadeConta() {
+        if((getStatus() == true) && (getSaldo() >= 1)){
+            if(getTipo() == "CC"){
+            setSaldo(getSaldo() - 15);
+        }
+            if((getTipo() == "CP")){
+            setSaldo(getSaldo() - 20);
+        }
+        
+    }
+  }
+
+    @Override
+    public void statusConta() {
+        System.out.println("sr."+this.getDono());
+        System.out.print("Sua do tipo,"+this.getTipo()+" esta: "+this.getStatus()+"\n");
+        System.out.print("Seu saldo: "+this.getSaldo());
+        
+    }
+
+    @Override
+    public void menuOpcao() {
+        System.out.println("        Menu Opções           ");
+        System.out.println("|-------------------------------|");
+        System.out.println("|(1) Abrir Conta                |");
+        System.out.println("|(2) Fechar Conta               |");
+        System.out.println("|(3) Depositar Conta            |");
+        System.out.println("|(4) Sacar Conta                |");
+        System.out.println("|(5) Status Conta               |");
+        System.out.println("|-------------------------------|");
+       int resp = teclado.nextInt();
+       switch(resp){
+           case 1:
+               abrirConta();
+               break;
+           case 2:
+               fecharConta();
+               break;
+           case 3:
+               depositarConta();
+               break;
+           case 4:
+               sacarConta();
+               break;
+           default:
+               statusConta();
+       }
+    }
+    
+}
