@@ -1,0 +1,129 @@
+/*
+ * O programa TempoXadrez, tem como foco calcular o tempo que levou um jogo de xadrez. 
+ *
+ */
+package tempoxadrez;
+
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author:   Grupo MimAcher
+ * 
+ *               Arthur Alves da Costa 
+ * @RA:          8341731
+ * 
+ *               Gabriel Silva de Assis Camargo
+ * @RA:          8391503
+ * 
+ *               Eduardo silva de Oliveira
+ * @RA:          8338366
+ * 
+ *               Alan Carvalho da Silva
+ * @RA:          8339588
+ * @version:     1.0
+ * 
+ */
+public class TempoXadrez {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        String horaI;
+        String horaF;
+        int duracaoDoJogo;
+        int horaInicial, minutoInicial, segundoInicial, horaFinal, minutoFinal, segundoFinal;
+        
+
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Horario inicial de jogo(por exemplo 16:20:00:");
+        horaI = teclado.nextLine();
+        System.out.println("Horario Final de jogo(por exemplo 17:20:00:");
+        horaF = teclado.nextLine();
+
+        String[] horaIA = ConversorSplit(horaI);
+        String[] horaFA = ConversorSplit(horaF);
+
+        horaInicial = Parseint(horaIA[0]);
+        minutoInicial = Parseint(horaIA[1]);
+        segundoInicial = Parseint(horaIA[2]);
+
+        horaFinal = Parseint(horaFA[0]);
+        minutoFinal = Parseint(horaFA[1]);
+        segundoFinal = Parseint(horaFA[2]);
+
+        duracaoDoJogo = Validador(horaInicial, minutoInicial, segundoInicial, horaFinal, minutoFinal, segundoFinal);
+        System.out.println(Resultado(duracaoDoJogo));
+    }
+
+    public static String[] ConversorSplit(String H) {
+        String Ha[] = H.split(":");
+        return Ha;
+    }
+
+    public static int Parseint(String H) {
+        int h = Integer.parseInt(H);
+
+        return h;
+    }
+
+    public static int Validador(int horaInicial, int minutoInicial, int segundoInicial, int horaFinal, int minutoFinal, int segundoFinal) {
+        int momentoInicial;
+        int momentoFinal;
+        int duracaoDoJogo;
+        if ((horaInicial > 24) || (horaInicial < 0)) {
+            System.out.println("Hora Inválida");
+            System.exit(0);
+        } else {
+            if ((minutoInicial > 60) || (minutoInicial < 0)) {
+                System.out.println("Minutos Inválidos");
+                System.exit(0);
+            } else {
+                if ((segundoInicial > 60) || (segundoInicial < 0)) {
+                    System.out.println("Segundos Inválidos");
+                    System.exit(0);
+                } else {
+                    if ((horaFinal > 24) || (horaFinal < 0)) {
+                        System.out.println("Hora Inválida");
+                        System.exit(0);
+                    } else {
+                        if ((minutoFinal > 60) || (minutoFinal < 0)) {
+                            System.out.println("Minutos Inválidos");
+                            System.exit(0);
+                        } else {
+                            if ((segundoFinal > 59) || (segundoFinal < 0)) {
+                                System.out.println("Segundos Inválidos");
+                                System.exit(0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        momentoInicial = ((horaInicial * 3600) + (minutoInicial * 60) + (segundoInicial * 60));
+        momentoFinal = ((horaFinal * 3600) + (minutoFinal * 60) + (segundoFinal * 60));
+        duracaoDoJogo = momentoFinal - momentoInicial;
+        return duracaoDoJogo;
+    }
+
+    public static String Resultado(int duracaoDoJogo) {
+        int ch, cm;
+        ch = cm = 0;
+        
+        while (duracaoDoJogo >= 3600) {
+            duracaoDoJogo = duracaoDoJogo - 3600;
+            ch++;
+        }
+        while (duracaoDoJogo >= 60) {
+            duracaoDoJogo = duracaoDoJogo - 60;
+            cm++;
+        }
+
+       return  "O jogo durou: " + ch + ":" + cm + ":" + duracaoDoJogo;
+    }
+
+}
+
