@@ -4,26 +4,25 @@
  */
 package tempoxadrez;
 
-
 import java.util.Scanner;
 
 /**
  *
- * @author:   Grupo MimAcher
- * 
- *               Arthur Alves da Costa 
- * @RA:          8341731
- * 
- *               Gabriel Silva de Assis Camargo
- * @RA:          8391503
- * 
- *               Eduardo silva de Oliveira
- * @RA:          8338366
- * 
- *               Alan Carvalho da Silva
- * @RA:          8339588
- * @version:     1.0
- * 
+ * @author: Grupo MimAcher
+ *
+ * Arthur Alves da Costa
+ * @RA: 8341731
+ *
+ * Gabriel Silva de Assis Camargo
+ * @RA: 8391503
+ *
+ * Eduardo silva de Oliveira
+ * @RA: 8338366
+ *
+ * Alan Carvalho da Silva
+ * @RA: 8339588
+ * @version: 1.0
+ *
  */
 public class TempoXadrez {
 
@@ -35,7 +34,6 @@ public class TempoXadrez {
         String horaF;
         int duracaoDoJogo;
         int horaInicial, minutoInicial, segundoInicial, horaFinal, minutoFinal, segundoFinal;
-        
 
         Scanner teclado = new Scanner(System.in);
         System.out.println("Horario inicial de jogo(por exemplo 16:20:00:");
@@ -105,6 +103,12 @@ public class TempoXadrez {
 
         momentoInicial = ((horaInicial * 3600) + (minutoInicial * 60) + (segundoInicial * 60));
         momentoFinal = ((horaFinal * 3600) + (minutoFinal * 60) + (segundoFinal * 60));
+        
+        if (momentoInicial > momentoFinal) {
+            System.out.println("Paramentros impossiveis de serem calculado, hora inicial maior que a hora final.");
+            System.exit(0);
+        }
+        
         duracaoDoJogo = momentoFinal - momentoInicial;
         return duracaoDoJogo;
     }
@@ -112,7 +116,7 @@ public class TempoXadrez {
     public static String Resultado(int duracaoDoJogo) {
         int ch, cm;
         ch = cm = 0;
-        
+
         while (duracaoDoJogo >= 3600) {
             duracaoDoJogo = duracaoDoJogo - 3600;
             ch++;
@@ -122,8 +126,7 @@ public class TempoXadrez {
             cm++;
         }
 
-       return  "O jogo durou: " + ch + ":" + cm + ":" + duracaoDoJogo;
+        return "O jogo durou: " + ch + ":" + cm + ":" + duracaoDoJogo;
     }
 
 }
-
